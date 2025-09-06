@@ -3,7 +3,7 @@
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/tdmuftuoglu/colebrook-mgb-uq/blob/main/PC-ML-Colebrook.ipynb)
 
 This repository provides a physics-constrained machine-learning surrogate for the Colebrook friction factor.  
-It matches Colebrook-White accuracy, enforces monotonic trends (↓ in Re, ↑ in ε/D), and provides calibrated prediction intervals.
+It matches Colebrook–White accuracy, enforces monotonic trends (↓ in Re, ↑ in ε/D), and provides calibrated prediction intervals.
 
 ---
 
@@ -37,10 +37,13 @@ It matches Colebrook-White accuracy, enforces monotonic trends (↓ in Re, ↑ i
 
 Colab installs everything automatically. To run locally:
 
-```bash
+~~~bash
 pip install -r requirements.txt
 # or minimal:
 # pip install lightgbm scikit-learn numpy pandas matplotlib
+~~~
+
+---
 
 ## How to cite
 
@@ -49,7 +52,7 @@ If you use this repository, please cite:
 Muftuoglu, T. D. (2025). *Physics-Constrained Machine-Learning Surrogates for the Colebrook Friction Factor: Monotonic Gradient Boosting, Uncertainty Quantification, and Open Benchmarking*. GitHub. https://github.com/tdmuftuoglu/colebrook-mgb-uq
 
 **BibTeX**
-```bibtex
+~~~bibtex
 @misc{Muftuoglu2025_Colebrook_MGB_UQ,
   title   = {Physics-Constrained Machine-Learning Surrogates for the Colebrook Friction Factor: Monotonic Gradient Boosting, Uncertainty Quantification, and Open Benchmarking},
   author  = {Muftuoglu, Tevfik Denizhan},
@@ -58,4 +61,10 @@ Muftuoglu, T. D. (2025). *Physics-Constrained Machine-Learning Surrogates for th
   note    = {Version v1.0},
   url     = {https://github.com/tdmuftuoglu/colebrook-mgb-uq}
 }
+~~~
 
+---
+
+## License
+
+This project is licensed under the **MIT License** — see [`LICENSE`](LICENSE) for full terms.
