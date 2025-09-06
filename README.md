@@ -41,3 +41,21 @@ Colab installs everything automatically. To run locally:
 pip install -r requirements.txt
 # or minimal:
 # pip install lightgbm scikit-learn numpy pandas matplotlib
+
+## How to cite
+
+If you use this repository, please cite:
+
+Muftuoglu, T. D. (2025). *Physics-Constrained Machine-Learning Surrogates for the Colebrook Friction Factor: Monotonic Gradient Boosting, Uncertainty Quantification, and Open Benchmarking*. GitHub. https://github.com/tdmuftuoglu/colebrook-mgb-uq
+
+**BibTeX**
+```bibtex
+@misc{Muftuoglu2025_Colebrook_MGB_UQ,
+  title   = {Physics-Constrained Machine-Learning Surrogates for the Colebrook Friction Factor: Monotonic Gradient Boosting, Uncertainty Quantification, and Open Benchmarking},
+  author  = {Muftuoglu, Tevfik Denizhan},
+  year    = {2025},
+  howpublished = {\url{https://github.com/tdmuftuoglu/colebrook-mgb-uq}},
+  note    = {Version v1.0},
+  url     = {https://github.com/tdmuftuoglu/colebrook-mgb-uq}
+}
+
