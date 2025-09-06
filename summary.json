@@ -1,0 +1,15 @@
+{
+  "RMSE": 4.819157221833026e-05,
+  "MAE": 1.161157561951619e-05,
+  "MAPE_percent": 0.06211388145925295,
+  "MaxAbsError": 0.0012383554143326238,
+  "Coverage_percent_test": 96.94899817850637,
+  "IntervalWidth_mean": 0.0013455034724429642,
+  "IntervalWidth_median": 8.805201902812448e-05,
+  "Monotonicity": {
+    "any_violation_along_Re_lines": 0,
+    "any_violation_along_k_lines": 0,
+    "checked_Re_steps": 1829,
+    "checked_k_steps": 1800
+  }
+}
