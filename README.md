@@ -1,70 +1,66 @@
-# Physics-Constrained ML Surrogate for Colebrook (Monotonic GBM + UQ)
+# Physics-Constrained Machine Learning Surrogate for the Colebrook Equation
+## Colebrook Denklemi için Fizik Kısıtlı Makine Öğrenmesi Vekil Modeli
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/tdmuftuoglu/colebrook-mgb-uq/blob/main/PC-ML-Colebrook.ipynb)
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-This repository provides a physics-constrained machine-learning surrogate for the Colebrook friction factor.  
-It matches Colebrook–White accuracy, enforces monotonic trends (↓ in Re, ↑ in ε/D), and provides calibrated prediction intervals.
+This repository provides a physics-constrained machine-learning surrogate model for the **Colebrook friction factor equation**. The model achieves the accuracy of the original Colebrook-White equation while strictly enforcing physical monotonicity constraints (friction factor decreases with Reynolds number and increases with relative roughness). It also provides calibrated 95% prediction intervals for uncertainty quantification.
+
+---
+Bu repo, **Colebrook sürtüme faktörü denklemi** için fizik kısıtlı bir makine öğrenmesi vekil modeli sunmaktadır. Model, orijinal Colebrook-White denkleminin doğruluğuna ulaşırken, fiziksel monotonluk kısıtlarını (sürtünme faktörünün Reynolds sayısı ile azalması ve bağıl pürüzlülük ile artması) kesin olarak uygular. Ayrıca, belirsizlik miktarının belirlenmesi için kalibre edilmiş %95 tahmin aralıkları sağlar.
 
 ---
 
-## Reproduce the paper
+## Features / Projenin Özellikleri
 
-1. Click the **Open in Colab** badge above.  
-2. In Colab: **Runtime → Run all**.  
-3. The notebook will:
-   - generate the (Re, ε/D) grid and compute Colebrook labels,
-   - train the monotonic GBM surrogate,
-   - conformally calibrate 95% prediction intervals,
-   - export metrics and figures.
-
-**It reproduces the figures and tables cited in the manuscript (Figures 43–46; Tables 1–3).**
+-   **High Accuracy / Yüksek Doğruluk:** Matches the precision of the iterative Colebrook-White equation. / İteratif Colebrook-White denkleminin hassasiyetine eşdeğer doğruluk sağlar.
+-   **Physics-Constrained / Fizik Kısıtlı:** Enforces monotonic trends where friction factor **decreases** with Reynolds number ($Re$) and **increases** with relative roughness ($\epsilon/D$). / Sürtünme faktörünün Reynolds sayısı ($Re$) ile **azaldığı** ve bağıl pürüzlülük ($\epsilon/D$) ile **arttığı** monotonik eğilimleri zorunlu kılar.
+-   **Uncertainty Quantification (UQ) / Belirsizlik Miktarının Belirlenmesi:** Provides calibrated 95% prediction intervals using conformal prediction. / Konformal tahminleme kullanarak kalibre edilmiş %95 tahmin aralıkları sunar.
+-   **Reproducibility / Tekrarlanabilirlik:** A single Google Colab notebook allows for one-click reproduction of all figures and tables from the associated manuscript. / Tek bir Google Colab not defteri, ilgili makaledeki tüm şekil ve tabloların tek tıkla yeniden üretilmesine olanak tanır.
 
 ---
 
-## Repository contents
+## How to Reproduce the Paper / Makale Sonuçlarını Tekrarlama
 
-- `PC-ML-Colebrook.ipynb` — one-click Colab notebook (end-to-end pipeline).  
-- `mgb_eval_24x7.csv` — 24×7 evaluation grid with predictions and 95% PIs.  
-- `summary.json` — RMSE, MAE, MAPE, MaxAbsError, coverage, interval widths, monotonicity checks.  
-- `parity_test.png`, `residual_vs_re_test.png`, `coverage_diag.png`, `width_vs_re_eval.png` — generated figures.  
-- `colebrook_template_goalseek_ready_graphs.xlsx` — Excel template (explicit formulas + Colebrook via Goal Seek).  
-- `requirements.txt` — optional local install.  
-- `LICENSE` — MIT license.
+The entire workflow is automated in a Google Colab notebook.
+Tüm iş akışı, bir Google Colab not defterinde otomatikleştirilmiştir.
 
----
-
-## Requirements (local, optional)
-
-Colab installs everything automatically. To run locally:
-
-~~~bash
-pip install -r requirements.txt
-# or minimal:
-# pip install lightgbm scikit-learn numpy pandas matplotlib
-~~~
+1.  **Open in Colab:** Click the **"Open in Colab"** badge at the top of this file.  
+    **Colab'de Açın:** Bu dosyanın başındaki **"Open in Colab"** butonuna tıklayın.
+2.  **Run All:** In the Colab interface, navigate to **Runtime → Run all**.  
+    **Tümünü Çalıştırın:** Colab arayüzünde **Çalışma Zamanı → Tümünü çalıştır** seçeneğini seçin.
+3.  **Automatic Execution:** The notebook will automatically:  
+    **Otomatik İşlemler:** Not defteri otomatik olarak şunları yapacaktır:
+    -   Generate the data grid ($Re$, $\epsilon/D$) and calculate true friction factor values. / Veri setini ($Re$, $\epsilon/D$) oluşturacak ve gerçek sürtünme faktörü değerlerini hesaplayacaktır.
+    -   Train the monotonic Gradient Boosting (GBM) surrogate model. / Monotonik Gradyan Artırma (GBM) vekil modelini eğitecektir.
+    -   Calibrate the 95% prediction intervals. / %95 tahmin aralıklarını kalibre edecektir.
+    -   Export all metrics and figures. / Tüm metrikleri ve grafikleri dışa aktaracaktır.
 
 ---
 
-## How to cite
+## Repository Contents / Repo İçeriği
 
-If you use this repository, please cite:
+-   `PC-ML-Colebrook.ipynb` → The one-click Google Colab notebook (end-to-end pipeline). / Uçtan uca tüm adımları içeren tek tıkla çalışan Colab not defteri.
+-   `mgb_eval_24x7.csv` → The 24×7 evaluation grid with model predictions and 95% prediction intervals. / Model tahminlerini ve %95 tahmin aralıklarını içeren 24×7 değerlendirme veri seti.
+-   `summary.json` → Key performance metrics (RMSE, MAE, coverage, etc.) and monotonicity checks. / Temel performans metrikleri (RMSE, MAE, kapsama vb.) ve monotonluk kontrolleri.
+-   `parity_test.png`, `residual_vs_re_test.png`, etc. → All figures generated by the pipeline. / Kod tarafından oluşturulan tüm grafikler.
+-   `colebrook_template_goalseek_ready_graphs.xlsx` → An Excel template with explicit formulas and a Goal Seek setup for the original Colebrook equation. / Açık formüller ve orijinal Colebrook denklemi için Hedef Ara kurulumu içeren bir Excel şablonu.
+-   `requirements.txt` → A list of dependencies for optional local installation. / İsteğe bağlı yerel kurulum için bağımlılıkların listesi.
+-   `LICENSE` → The MIT License file. / MIT Lisans dosyası.
+
+---
+
+## Citation / Atıf
+
+If you use this repository in your research, please cite:
+Bu repoyu araştırmalarınızda kullanırsanız, lütfen atıfta bulunun:
 
 Muftuoglu, T. D. (2025). *Physics-Constrained Machine-Learning Surrogates for the Colebrook Friction Factor: Monotonic Gradient Boosting, Uncertainty Quantification, and Open Benchmarking*. GitHub. https://github.com/tdmuftuoglu/colebrook-mgb-uq
 
-**BibTeX**
-~~~bibtex
-@misc{Muftuoglu2025_Colebrook_MGB_UQ,
-  title   = {Physics-Constrained Machine-Learning Surrogates for the Colebrook Friction Factor: Monotonic Gradient Boosting, Uncertainty Quantification, and Open Benchmarking},
-  author  = {Muftuoglu, Tevfik Denizhan},
-  year    = {2025},
-  howpublished = {\url{https://github.com/tdmuftuoglu/colebrook-mgb-uq}},
-  note    = {Version v1.0},
-  url     = {https://github.com/tdmuftuoglu/colebrook-mgb-uq}
-}
-~~~
-
 ---
 
-## License
+## License / Lisans
 
-This project is licensed under the **MIT License** — see [`LICENSE`](LICENSE) for full terms.
+This project is licensed under the **MIT License**. See the [`LICENSE`](LICENSE) file for full terms.
+Bu proje **MIT Lisansı** altında lisanslanmıştır. Tüm koşullar için [`LICENSE`](LICENSE) dosyasına bakın.
