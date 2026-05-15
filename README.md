@@ -225,31 +225,7 @@ Quantile models (tau=0.05 and tau=0.95):
 
 ## Citation
 
-If you use this code or data in your research, please cite:
-
-```bibtex
-@article{muftuoglu2025colebrook,
-  author  = {Muftuoglu, Tevfik Denizhan},
-  title   = {Physics-Constrained Machine-Learning Surrogates for the Colebrook
-             Friction Factor: Monotonic Gradient Boosting, Uncertainty
-             Quantification, and Open Benchmarking},
-  journal = {Scientific Reports},
-  year    = {2025},
-  note    = {Under review}
-}
-
-@software{muftuoglu2025colebrook_code,
-  author = {Muftuoglu, Tevfik Denizhan},
-  title  = {colebrook-mgb-uq: Physics-Constrained Machine Learning Surrogate
-            for the Colebrook Friction Factor},
-  year   = {2025},
-  url    = {https://github.com/tdmuftuoglu/colebrook-mgb-uq},
-  doi    = {10.5281/zenodo.XXXXXXX}
-}
-```
-
-*(Zenodo DOI will be updated after deposit.)*
-
+If you use this code or data in your research, please cite accordingly.
 ---
 
 ## License
@@ -260,6 +236,4 @@ MIT License — see [`LICENSE`](LICENSE) for full terms.
 
 ## Contact
 
-**Tevfik Denizhan Muftuoglu**, Asst. Prof. Dr.  
-Civil Engineering (English) Department, Istanbul Aydin University  
-tmuftuoglu@aydin.edu.tr
+**Tevfik Denizhan Muftuoglu**
