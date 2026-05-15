@@ -11,7 +11,7 @@
 
 This repository contains the complete, reproducible pipeline for the following manuscript (under peer review):
 
-> Muftuoglu, T. D. — *Physics-Constrained Machine-Learning Surrogates for the Colebrook Friction Factor: Monotonic Gradient Boosting, Uncertainty Quantification, and Open Benchmarking* — under review, *Scientific Reports* (Nature Portfolio).
+> Muftuoglu, T. D. — *Physics-Constrained Machine-Learning Surrogates for the Colebrook Friction Factor: Monotonic Gradient Boosting, Uncertainty Quantification, and Open Benchmarking
 
 Everything in this repository — from raw data generation to every figure in the paper — can be reproduced by running a single Google Colab notebook.
 
