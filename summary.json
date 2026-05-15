@@ -1,0 +1,20 @@
+{
+  "RMSE": 0.0003188087976340738,
+  "MAE": 0.00010672751172669776,
+  "MAPE_percent_testset": 0.25124326429470767,
+  "MAPE_percent_eval_grid_rough": 0.1684476834852306,
+  "MaxAbsError": 0.005746518991600093,
+  "Coverage_percent_test": 95.53734061930783,
+  "IntervalWidth_mean": 0.0012980504771145,
+  "IntervalWidth_median": 0.00018335949788009925,
+  "Monotonicity": {
+    "any_violation_along_Re_lines": 0,
+    "any_violation_along_k_lines": 0,
+    "checked_Re_steps": 1829,
+    "checked_k_steps": 1800
+  },
+  "Serghides_monotonicity": {
+    "Re_violations": 0,
+    "k_violations": 0
+  }
+}
