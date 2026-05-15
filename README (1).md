@@ -13,7 +13,7 @@
 
 This repository provides the full reproducible pipeline for the manuscript:
 
-> **Muftuoglu, T. D.** — *Physics-Constrained Machine-Learning Surrogates for the Colebrook Friction Factor: Monotonic Gradient Boosting, Uncertainty Quantification, and Open Benchmarking* — under review, *Theoretical and Computational Fluid Dynamics* (Scientific Reports, Nature Portfolio).
+> **Muftuoglu, T. D.** — *Physics-Constrained Machine-Learning Surrogates for the Colebrook Friction Factor: Monotonic Gradient Boosting, Uncertainty Quantification, and Open Benchmarking 
 
 The Darcy–Weisbach friction factor `f` is fundamental to head-loss modelling in pressurised pipe systems. It is governed by the **Colebrook–White equation**, which is implicit in `f` and requires iterative solution. This repository introduces a **physics-constrained monotonic gradient boosting (MGB) surrogate** that:
 
