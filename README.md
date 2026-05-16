@@ -1,6 +1,6 @@
 # Physics-Constrained Machine Learning Surrogate for the Colebrook Friction Factor
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/tdmuftuoglu/colebrook-mgb-uq/blob/main/PC_ML_Colebrook_v3.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/tdmuftuoglu/colebrook-mgb-uq/blob/main/PC_ML_Colebrook_v4.ipynb)
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)
 ![LightGBM](https://img.shields.io/badge/LightGBM-4.5.0-green.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
@@ -11,7 +11,7 @@
 
 This repository contains the complete, reproducible pipeline for the following manuscript (under peer review):
 
-> Muftuoglu, T. D. — *Physics-Constrained Machine-Learning Surrogates for the Colebrook Friction Factor: Monotonic Gradient Boosting, Uncertainty Quantification, and Open Benchmarking
+> Muftuoglu, T. D. — *Physics-Constrained Machine-Learning Surrogates for the Colebrook Friction Factor: Monotonic Gradient Boosting, Uncertainty Quantification, and Open Benchmarking*
 
 Everything in this repository — from raw data generation to every figure in the paper — can be reproduced by running a single Google Colab notebook.
 
@@ -61,7 +61,7 @@ It is important to understand what these intervals mean: they quantify *how accu
 
 The surrogate is benchmarked transparently against Serghides and the other explicit formulas on a fixed, publicly available evaluation grid.
 
-Serghides remains the most accurate point estimator by a large margin (MAPE = 0.0003%). The MGB surrogate sits between Haaland and Serghides in point accuracy (MAPE = 0.168%) but is the only method that provides both a monotonicity certificate and calibrated reliability bounds. The intended use case is not to replace Serghides when a simple number is sufficient — it is for workflows that additionally need to know how reliable that number is.
+Serghides remains the most accurate point estimator by a large margin (MAPE = 0.012%). The MGB surrogate sits between Haaland and Serghides in point accuracy (MAPE = 0.168%) but is the only method that provides both a monotonicity certificate and calibrated reliability bounds. The intended use case is not to replace Serghides when a simple number is sufficient — it is for workflows that additionally need to know how reliable that number is.
 
 ---
 
@@ -75,15 +75,15 @@ Serghides remains the most accurate point estimator by a large margin (MAPE = 0.
 | Monotonicity violations (1,829 Re checks + 1,800 eps/D checks) | **0** |
 | Max absolute error — test set | 5.75e-3 |
 | Training Re range | 4,000 – 1e8 |
-| Training grid | 240 x 61 = 14,640 cases |
+| Training grid | 240 × 61 = 14,640 cases |
 
-**Comparison with explicit formulas (24x7 rough-pipe evaluation grid):**
+**Comparison with explicit formulas (24×7 rough-pipe evaluation grid):**
 
 | Method | MAPE (%) | Monotonicity guarantee | Uncertainty bounds |
 |---|---|---|---|
 | Haaland | 0.236 | No | No |
 | Swamee-Jain | 0.546 | No | No |
-| Serghides | 0.0003 | No | No |
+| Serghides | 0.012 | No | No |
 | **MGB (this work)** | **0.168** | **Yes** | **Yes** |
 
 ---
@@ -93,14 +93,15 @@ Serghides remains the most accurate point estimator by a large margin (MAPE = 0.
 ```
 colebrook-mgb-uq/
 │
-├── PC_ML_Colebrook_v3.ipynb               ← Main notebook — run this
+├── PC_ML_Colebrook_v4.ipynb               ← Main notebook — run this
+│
+├── Colebrook_MGB_Template.xlsx            ← Excel calculator (3 sheets)
 │
 ├── mgb_eval_24x7.csv                      ← Evaluation grid predictions + intervals
 ├── summary.json                           ← All key metrics, machine-readable
+├── timing_table.csv                       ← Wall-clock timing benchmark (7 runs median)
 │
-├── fig1.png  through  fig13.png           ← All manuscript figures
-│
-├── colebrook_template_goalseek_ready_graphs.xlsx   ← Excel calculator
+├── fig1.png  through  fig13.png           ← All manuscript figures (250 dpi)
 │
 ├── requirements.txt                       ← Python dependencies
 ├── LICENSE                                ← MIT License
@@ -109,20 +110,23 @@ colebrook-mgb-uq/
 
 ### File descriptions
 
-**`PC_ML_Colebrook_v3.ipynb`**  
-The end-to-end pipeline in a single Colab notebook. It generates the synthetic training data, solves the Colebrook equation for each grid point using a Newton–Raphson solver converged to 1e-12 relative tolerance, trains the monotonic gradient boosting model and the quantile models, calibrates the conformal prediction intervals, evaluates everything against explicit baselines, and produces all 13 figures. Running "Runtime → Run all" is all that is required. All outputs are packaged as `mgb_results_v3.zip` and downloaded automatically.
+**`PC_ML_Colebrook_v4.ipynb`**  
+The end-to-end pipeline in a single Colab notebook. It generates the synthetic training data, solves the Colebrook equation for each grid point using a Newton–Raphson solver converged to 1e-12 relative tolerance, trains the monotonic gradient boosting model and the quantile models, calibrates the conformal prediction intervals, evaluates everything against explicit baselines, and produces all 13 figures. Running "Runtime → Run all" is all that is required. All outputs are packaged as `mgb_results_v4.zip` and downloaded automatically.
+
+**`Colebrook_MGB_Template.xlsx`**  
+An Excel workbook with three sheets: (i) a *Calculator* sheet where engineers enter Re and ε/D in yellow input cells and immediately obtain f from four methods (Serghides, Haaland, Swamee–Jain, MGB surrogate nearest-neighbour lookup); (ii) a *LookupTable* sheet with 1,464 precomputed friction factor values on the 24×61 MGB prediction grid; (iii) an *Instructions* sheet with step-by-step guidance including how to enable Excel's iterative calculation for the Colebrook–White row.
 
 **`mgb_eval_24x7.csv`**  
-The 24x7 evaluation grid output. 24 log-spaced Re values from 4,000 to 1e8, crossed with eps/D = {0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06}, giving 168 cases. Columns: `Re`, `k_rel` (= eps/D), `f_colebrook` (reference), `f_pred` (MGB point prediction), `PI_lower`, `PI_upper`, `covered` (1 if true value falls inside the interval, 0 otherwise), `abs_err`, `pct_err`.
+The 24×7 evaluation grid output. 24 log-spaced Re values from 4,000 to 1e8, crossed with eps/D = {0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06}, giving 168 cases. Columns: `Re`, `k_rel` (= eps/D), `f_colebrook` (reference), `f_pred` (MGB point prediction), `PI_lower`, `PI_upper`, `covered` (1 if true value falls inside the interval, 0 otherwise), `abs_err`, `pct_err`.
 
 **`summary.json`**  
 Machine-readable dictionary of all reported metrics: RMSE, MAE, MAPE on test set and evaluation grid, coverage, mean and median interval widths, and monotonicity check results for both MGB and Serghides on their respective grids.
 
-**`fig1.png` – `fig13.png`**  
-All 13 manuscript figures at 200 dpi. Figs 1–6 compare the explicit formulas against Colebrook across seven roughness values. Figs 7–10 characterise the MGB surrogate — parity, residuals, coverage diagnostic, and interval width vs Re. Fig 11 shows external validation against Nikuradse (1933) experimental data for four roughness values. Fig 12 shows a computational timing comparison between Newton–Raphson, Serghides, and MGB. Fig 13 shows how model accuracy changes as the training grid is made denser.
+**`timing_table.csv`**  
+Median wall-clock times (ms) for Colebrook–White (Newton–Raphson), Serghides, and MGB surrogate across batch sizes N = 1 to 10^6 (7 repeated runs per size). Corresponds to Table 6 and Fig 12 in the manuscript.
 
-**`colebrook_template_goalseek_ready_graphs.xlsx`**  
-An Excel workbook with three components: (i) an explicit formula calculator for Haaland, Swamee-Jain, and Serghides; (ii) a Goal Seek setup that lets the user solve the full Colebrook equation iteratively inside Excel; (iii) a lookup table from the MGB surrogate for users who do not have Python.
+**`fig1.png` – `fig13.png`**  
+All 13 manuscript figures at 250 dpi. Figs 1–6 compare the explicit formulas against Colebrook across seven roughness values. Figs 7–10 characterise the MGB surrogate — parity, residuals, coverage diagnostic, and interval width vs Re. Fig 11 shows external validation against Nikuradse (1933) experimental data for four roughness values (39 data points total spanning Re ≈ 2×10⁴ to 4×10⁶). Fig 12 shows a computational timing comparison between Newton–Raphson, Serghides, and MGB. Fig 13 shows how model accuracy changes as the training grid is made denser.
 
 ---
 
@@ -132,7 +136,7 @@ An Excel workbook with three components: (i) an explicit formula calculator for 
 
 1. Click the **Open in Colab** badge at the top of this page.
 2. Select **Runtime → Run all**.
-3. When the notebook finishes, it downloads `mgb_results_v3.zip` containing all figures and metrics.
+3. When the notebook finishes, it downloads `mgb_results_v4.zip` containing all figures, the timing table, and metrics.
 
 No local installation is needed. The notebook installs its own dependencies inside the Colab session.
 
@@ -142,7 +146,7 @@ No local installation is needed. The notebook installs its own dependencies insi
 git clone https://github.com/tdmuftuoglu/colebrook-mgb-uq.git
 cd colebrook-mgb-uq
 pip install -r requirements.txt
-jupyter notebook PC_ML_Colebrook_v3.ipynb
+jupyter notebook PC_ML_Colebrook_v4.ipynb
 ```
 
 Requirements: Python >= 3.9, LightGBM 4.5.0, scikit-learn 1.4.x, NumPy, pandas, matplotlib.
@@ -162,9 +166,9 @@ Requirements: Python >= 3.9, LightGBM 4.5.0, scikit-learn 1.4.x, NumPy, pandas, 
 | Fig 7 | Parity plot: MGB predictions vs Colebrook on the test set |
 | Fig 8 | MGB residuals vs Re on the test set |
 | Fig 9 | Coverage diagnostic: distance of true values to the conformal prediction bounds |
-| Fig 10 | Prediction interval width vs Re — shows where surrogate emulation is harder |
-| Fig 11 | MGB predictions and 95% PI bands vs Nikuradse (1933) experimental data |
-| Fig 12 | Wall-clock timing: Newton–Raphson vs Serghides vs MGB, N = 1 to 1e6 evaluations |
+| Fig 10 | Prediction interval width vs Re — shows where surrogate emulation fidelity decays |
+| Fig 11 | MGB predictions and 95% PI bands vs Nikuradse (1933) experimental data (legend below axes) |
+| Fig 12 | Wall-clock timing: Newton–Raphson vs Serghides vs MGB, N = 1 to 10^6 evaluations |
 | Fig 13 | Training grid density sensitivity: MAPE vs number of training cases |
 
 ---
@@ -226,6 +230,7 @@ Quantile models (tau=0.05 and tau=0.95):
 ## Citation
 
 If you use this code or data in your research, please cite accordingly.
+
 ---
 
 ## License
